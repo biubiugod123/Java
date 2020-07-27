@@ -2,52 +2,34 @@ package JDBC;
    
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-  
+    
 public class Test_JDBC {
     public static void main(String[] args) {
- 
-        Connection c = null;
-        Statement s = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
- 
-            c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/how2java?characterEncoding=UTF-8", "root",
-                    "admin");
- 
-            s = c.createStatement();
- 
-            String sql = "insert into hero values(null," + "'提莫'" + "," + 313.0f + "," + 50 + ")";
- 
-            s.execute(sql);
- 
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+        }
+  
+        String sql = "insert into hero values(null,?,?,?)";
+        try (Connection c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/how2java?characterEncoding=UTF-8","root", "admin");
+            // 根据sql语句创建PreparedStatement
+            PreparedStatement ps = c.prepareStatement(sql);
+        ) {
+             
+            // 设置参数
+            ps.setString(1, "提莫");
+            ps.setFloat(2, 313.0f);
+            ps.setInt(3, 50);
+            // 执行
+            ps.execute();
+  
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } finally {
-            // 数据库的连接时有限资源，相关操作结束后，养成关闭数据库的好习惯
-            // 先关闭Statement
-            if (s != null)
-                try {
-                    s.close();
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            // 后关闭Connection
-            if (c != null)
-                try {
-                    c.close();
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
- 
         }
- 
+    
     }
 }

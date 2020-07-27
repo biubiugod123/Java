@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
+encoding//src/JDBC/ConnectionPool.java=UTF-8
 encoding//src/JDBC/Test_JDBC.java=UTF-8
+encoding//src/JDBC/testConnectionPool.java=UTF-8
+encoding//src/JDBC/testJDBC2.java=UTF-8
 encoding//src/mutithead/Lock.java=UTF-8
 encoding//src/mutithead/Trylock.java=UTF-8
