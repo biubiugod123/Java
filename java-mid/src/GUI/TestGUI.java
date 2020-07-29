@@ -1,36 +1,44 @@
 package GUI;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+  
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-
+import javax.swing.JLabel;
+  
 public class TestGUI {
-	public static void main(String[] args) {
-        // main interface
-        JFrame f = new JFrame("DOTA2");
- 
-        // 主窗体设置大小
-        f.setSize(500, 300);
- 
-        // 主窗体设置位置
-        f.setLocation(1000, 200);
- 
-        // 主窗体中的组件设置为绝对定位
+    public static void main(String[] args) {
+  
+        JFrame f = new JFrame("LoL");
+        f.setSize(400, 300);
+        f.setLocation(580, 200);
         f.setLayout(null);
- 
-        // 按钮组件
-        JButton b = new JButton("一键秒对方基地挂");
- 
-        // 同时设置组件的大小和位置
-        b.setBounds(50, 50, 280, 30);
- 
-        // 把按钮加入到主窗体中
+  
+        final JLabel l = new JLabel();
+  
+        ImageIcon i = new ImageIcon("e:/project/j2se/shana.png");
+        l.setIcon(i);
+        l.setBounds(50, 50, i.getIconWidth(), i.getIconHeight());
+  
+        JButton b = new JButton("隐藏图片");
+        b.setBounds(150, 200, 100, 30);
+  
+        // 给按钮 增加 监听
+        b.addActionListener(new ActionListener() {
+  
+            // 当按钮被点击时，就会触发 ActionEvent事件
+            // actionPerformed 方法就会被执行
+            public void actionPerformed(ActionEvent e) {
+                l.setVisible(false);
+            }
+        });
+  
+        f.add(l);
         f.add(b);
- 
-        // 关闭窗体的时候，退出程序
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // 让窗体变得可见
+  
         f.setVisible(true);
- 
     }
-
 }
