@@ -1,44 +1,28 @@
 package GUI;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-  
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-  
+ 
 public class TestGUI {
     public static void main(String[] args) {
-  
+ 
         JFrame f = new JFrame("LoL");
         f.setSize(400, 300);
         f.setLocation(580, 200);
         f.setLayout(null);
-  
-        final JLabel l = new JLabel();
-  
-        ImageIcon i = new ImageIcon("e:/project/j2se/shana.png");
-        l.setIcon(i);
-        l.setBounds(50, 50, i.getIconWidth(), i.getIconHeight());
-  
-        JButton b = new JButton("隐藏图片");
-        b.setBounds(150, 200, 100, 30);
-  
-        // 给按钮 增加 监听
-        b.addActionListener(new ActionListener() {
-  
-            // 当按钮被点击时，就会触发 ActionEvent事件
-            // actionPerformed 方法就会被执行
-            public void actionPerformed(ActionEvent e) {
-                l.setVisible(false);
-            }
-        });
-  
-        f.add(l);
-        f.add(b);
+        JCheckBox bCheckBox = new JCheckBox("物理英雄");
+        //设置 为 默认被选中
+        bCheckBox.setSelected(true);
+        bCheckBox.setBounds(50, 50, 130, 30);
+        JCheckBox bCheckBox2 = new JCheckBox("魔法 英雄");
+        bCheckBox2.setBounds(50, 100, 130, 30);
+        //判断 是否 被 选中
+        System.out.println(bCheckBox2.isSelected());
+ 
+        f.add(bCheckBox);
+        f.add(bCheckBox2);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  
+ 
         f.setVisible(true);
     }
 }
