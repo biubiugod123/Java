@@ -1,58 +1,70 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
  
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.SwingWorker;
  
 public class TestGUI {
- 
     public static void main(String[] args) {
-        JFrame f = new JFrame("CardLayerout");
  
-        JPanel comboBoxPane = new JPanel();
-        String buttonPanel = "按钮面板";
-        String inputPanel = "输入框面板";
-        String comboBoxItems[] = { buttonPanel, inputPanel };
-        JComboBox<String> cb = new JComboBox<>(comboBoxItems);
-        comboBoxPane.add(cb);
+        JFrame f = new JFrame("LoL");
+        f.setSize(300, 300);
+        f.setLocation(200, 200);
+        f.setLayout(new FlowLayout());
  
-        // 两个Panel充当卡片
-        JPanel card1 = new JPanel();
-        card1.add(new JButton("按钮 1"));
-        card1.add(new JButton("按钮 2"));
-        card1.add(new JButton("按钮 3"));
- 
-        JPanel card2 = new JPanel();
-        card2.add(new JTextField("输入框", 20));
- 
-        JPanel cards; // a panel that uses CardLayout
-        cards = new JPanel(new CardLayout());
-        cards.add(card1, buttonPanel);
-        cards.add(card2, inputPanel);
- 
-        f.add(comboBoxPane, BorderLayout.NORTH);
-        f.add(cards, BorderLayout.CENTER);
+        JButton b1 = new JButton("在事件调度线程中执行长耗时任务");
+        JButton b2 = new JButton("使用SwingWorker执行长耗时任务");
+        JLabel l = new JLabel("任务执行结果");
+        f.add(b1);
+        f.add(b2);
+        f.add(l);
  
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(250, 150);
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
  
-        cb.addItemListener(new ItemListener() {
-        	 
+        b1.addActionListener(new ActionListener() {
+ 
             @Override
-            public void itemStateChanged(ItemEvent evt) {
-                CardLayout cl = (CardLayout) (cards.getLayout());
-                cl.show(cards, (String) evt.getItem());
+            public void actionPerformed(ActionEvent e) {
+                l.setText("开始执行完毕");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                l.setText("任务执行完毕");
             }
-        });    
+        });
+        b2.addActionListener(new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+ 
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        System.out.println("执行这个SwingWorder的线程是：" + Thread.currentThread().getName());
+                        l.setText("开始执行完毕");
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                        l.setText("任务执行完毕");
+                        return null;
+                    }
+                };
+                worker.execute();
+ 
+            }
+        });
+ 
+        f.setVisible(true);
     }
-         
 }
