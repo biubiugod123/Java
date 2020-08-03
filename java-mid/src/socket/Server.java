@@ -1,5 +1,6 @@
 package socket;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -13,15 +14,10 @@ public class Server {
 		   System.out.println("监听8888端口");
 		   Socket s = ss.accept();
 		   
-		   InputStream is = s.getInputStream();
-		   
-		   int msg = is.read();
-		   
-		   System.out.println(msg);
-		   is.close();
-		   
-		   s.close();
-		   ss.close();
+		   new SendThread(s).start();
+		   new RecieveThread(s).start();
+		  
+		  
 		   
 	} catch(IOException e) {
 		e.printStackTrace();
