@@ -32,7 +32,7 @@ public class UserController {
 	public IMoocJSONResult getUserJson() {
 		
 		User u = new User();
-		u.setName("imooc");
+		u.setName("imooc2");
 		u.setAge(18);
 		u.setBirthday(new Date());
 		u.setPassword("imooc");
